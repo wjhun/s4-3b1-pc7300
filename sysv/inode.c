@@ -205,11 +205,6 @@ struct inode *sysv_iget(struct super_block *sb, unsigned int ino)
 	inode_set_ctime(inode, fs32_to_cpu(sbi, raw_inode->i_ctime), 0);
 	inode->i_blocks = 0;
 
-#ifdef dbrower_
-printk("%s i %d m 0%o u %d g %d, sz %d\n", 
-       __func__, ino, inode->i_mode, inode->i_uid, inode->i_gid, inode->i_size);
-#endif
-
 	si = SYSV_I(inode);
 	for (block = 0; block < 10+1+1+1; block++)
 		read3byte(sbi, &raw_inode->i_data[3*block],

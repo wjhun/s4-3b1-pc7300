@@ -123,8 +123,6 @@ struct sysv2_super_block {
 								2 for 1024 byte blocks */
 };
 
-
-
 /* CTIX / 3b1 / pc7300 super-block data on disk */
 
 /* CTIX is SVR2, no s_state, smaller s_pad, s_pad2 at the end */
@@ -142,7 +140,7 @@ struct ctix_super_block {
 	char	s_ronly;		/* flag whether fs is mounted read-only */
 	__fs32	s_time;           	/* time of last super block update */
 	__fs16	s_dinfo[4];		/* device information [0]=step, [1]=cylinders */
-       __fs32	s_tfree;	        /* total number of free zones */
+	__fs32	s_tfree;	        /* total number of free zones */
 	__fs16	s_tinode;		/* total number of free inodes */
 	char	s_fname[6];		/* file system volume name */
 	char	s_fpack[6];		/* file system pack name */
@@ -150,39 +148,8 @@ struct ctix_super_block {
 	s32	s_magic;		/* version of file system */
 	__fs32	s_type;			/* type of file system: 1 for 512 byte b
 								2 for 1024 byte blocks */
-        s32     s_fill2[2];                                           
-
+	s32     s_fill2[2];
 }  __attribute__((__packed__));	/* this packing works */
-
-#if 0
-/* this is broken? */
-/* CTIX is SVR2, no s_state, smaller s_pad, s_pad2 at the end */
-
-struct ctix_super_block {
-	__fs16	s_isize; 		/* index of first data zone */
-	__fs32	s_fsize __packed2__;	/* total number of zones of this fs */
-	__fs16	s_nfree;		/* number of free blocks in s_free, <= SYSV_NICFREE */
-	sysv_zone_t s_free[SYSV_NICFREE];	/* first free block list chunk */
-	__fs16	s_ninode;		/* number of free inodes in s_inode, <= SYSV_NICINOD */
-	sysv_ino_t s_inode[SYSV_NICINOD]; /* some free inodes */
-	/* locks, not used by Linux: */
-	char	s_flock;		/* lock during free block list manipulation */
-	char	s_ilock;		/* lock during inode cache manipulation */
-	char	s_fmod;			/* super-block modified flag */
-	char	s_ronly;		/* flag whether fs is mounted read-only */
-	__fs32	s_time __packed2__;	/* time of last super block update */
-	__fs16	s_dinfo[4];		/* device information [0]=step, [1]=cylinders */
-	__fs32	s_tfree __packed2__;	/* total number of free zones */
-	__fs16	s_tinode;		/* total number of free inodes */
-	char	s_fname[6];		/* file system volume name */
-	char	s_fpack[6];		/* file system pack name */
-	s32	s_fill[13];
-	s32	s_magic;		/* version of file system */
-	__fs32	s_type;			/* type of file system: 1 for 512 byte b
-								2 for 1024 byte blocks */
-        s32     s_fill2[2];                                           
-};
-#endif
 
 /* V7 super-block data on disk */
 #define V7_NICINOD     100     /* number of inode cache entries */

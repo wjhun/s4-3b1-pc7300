@@ -305,26 +305,22 @@ static int detect_ctix(struct sysv_sb_info *sbi, struct buffer_head *bh)
 	u32 type;
 
 	sbd = (struct ctix_super_block *) (bh->b_data + BLOCK_SIZE/2);
-	if (*(__le32 *)&sbd->s_magic == cpu_to_le32(0xfd187e20))
-	  {
+	if (*(__le32 *)&sbd->s_magic == cpu_to_le32(0xfd187e20)) {
 		printk("detect_ctix LE\n");
 		sbi->s_bytesex = BYTESEX_LE;
-	  }
-	else if (*(__be32 *)&sbd->s_magic == cpu_to_be32(0xfd187e20))
-	  {
+	} else if (*(__be32 *)&sbd->s_magic == cpu_to_be32(0xfd187e20)) {
 		printk("detect_ctix BE\n");
 		sbi->s_bytesex = BYTESEX_BE;
-	  }
-	else
+	} else
 		return 0;
 
 	type = fs32_to_cpu(sbi, sbd->s_type);
- 
-        if (type > 3 || type < 1)
+
+	if (type > 3 || type < 1)
 		return 0;
 
-        sbi->s_type = FSTYPE_CTIX;
-        return type;
+	sbi->s_type = FSTYPE_CTIX;
+	return type;
 }
 
 static struct {
@@ -337,7 +333,7 @@ static struct {
 	{9, detect_sysv_odd},
 	{15,detect_sysv_odd},
 	{18,detect_sysv},
-        {0, detect_ctix},
+	{0, detect_ctix},
 };
 
 static char *flavour_names[] = {
@@ -415,7 +411,7 @@ static int sysv_fill_super(struct super_block *sb, void *data, int silent)
 	struct sysv_sb_info *sbi;
 	unsigned long blocknr;
 	int size = 0, i;
-	
+
 	BUILD_BUG_ON(1024 != sizeof (struct xenix_super_block));
 	BUILD_BUG_ON(512 != sizeof (struct sysv4_super_block));
 	BUILD_BUG_ON(512 != sizeof (struct sysv2_super_block));
@@ -431,7 +427,6 @@ static int sysv_fill_super(struct super_block *sb, void *data, int silent)
 	sbi->s_block_base = 0;
 	mutex_init(&sbi->s_lock);
 	sb->s_fs_info = sbi;
-
 	sb->s_time_min = 0;
 	sb->s_time_max = U32_MAX;
 	sb_set_blocksize(sb, BLOCK_SIZE);

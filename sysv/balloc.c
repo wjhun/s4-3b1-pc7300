@@ -67,7 +67,7 @@ void sysv_free_block(struct super_block * sb, sysv_zone_t nr)
 	count = fs16_to_cpu(sbi, *sbi->s_bcache_count);
 
 	if (count > sbi->s_flc_size) {
-	  printk("sysv_free_block: flc_count %d > flc_size %d\n", count, sbi->s_flc_size);
+		printk("sysv_free_block: flc_count %d > flc_size %d\n", count, sbi->s_flc_size);
 		mutex_unlock(&sbi->s_lock);
 		return;
 	}
@@ -146,7 +146,7 @@ sysv_zone_t sysv_new_block(struct super_block * sb)
 		else
 			count = fs16_to_cpu(sbi, *(__fs16*)bh->b_data);
 		if (count > sbi->s_flc_size) {
-		  printk("sysv_new_block: free-list block with %d >flc_size %d entries\n", count, sbi->s_flc_size );
+			printk("sysv_new_block: free-list block with %d >flc_size %d entries\n", count, sbi->s_flc_size );
 			brelse(bh);
 			goto Enospc;
 		}
@@ -232,7 +232,7 @@ done:
 
 Einval:
 	printk("sysv_count_free_blocks: new block %u is not in data zone %u %u\n",
-		block, sbi->s_firstdatazone, sbi->s_nzones );
+		block, sbi->s_firstdatazone, sbi->s_nzones);
 	goto trust_sb;
 Eio:
 	printk("sysv_count_free_blocks: cannot read free-list block\n");
